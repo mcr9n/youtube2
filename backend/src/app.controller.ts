@@ -1,12 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, } from '@nestjs/common';
+import { InjectKnex, Knex } from 'nestjs-knex';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    @InjectKnex() private readonly knex: Knex,
+  ) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async getHello() {
+    if (!await this.knex.schema.hasTable('users')) {
+      await this.knex.schema.createTable('users', table => {
+        table.increments('id').primary();
+        table.string('name');
+      });
+    }
+    const users = await this.knex.raw('select * from video');
+    return { users };
   }
 }
