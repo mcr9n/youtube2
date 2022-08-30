@@ -4,13 +4,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [KnexModule.forRoot({
-    config: {
-      client: "pg",
-      connection: 'postgresql://postgres:postgres@localhost/youtube2',
-
-    },
-  }),],
+  imports: [
+    KnexModule.forRoot({
+      config: {
+        client: 'pg',
+        connection: 'postgresql://postgres:postgres@localhost/youtube2',
+      },
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
