@@ -4,22 +4,22 @@ export async function up(knex: Knex): Promise<void> {
   return knex.raw(`
     CREATE TABLE usuario (
       id SERIAL PRIMARY KEY,
-      nome VARCHAR(45) NOT NULL,
-      email VARCHAR(45) NOT NULL,
+      nome VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
       data_de_criacao TIMESTAMP
     );
     
     CREATE TABLE canal (
       id SERIAL PRIMARY KEY,
-      nome VARCHAR(45) NOT NULL,
-      sobre VARCHAR(45) NOT NULL,
+      nome VARCHAR(255) NOT NULL,
+      sobre VARCHAR(255) NOT NULL,
     
       usuario_id INTEGER REFERENCES usuario (id)
     );
     
     CREATE TABLE video (
       id SERIAL PRIMARY KEY,
-      titulo VARCHAR(45) NOT NULL,
+      titulo VARCHAR(255) NOT NULL,
       duracao INTEGER NOT NULL,
       qualidade INTEGER NOT NULL,
       thumbnail BYTEA NOT NULL,
@@ -30,7 +30,7 @@ export async function up(knex: Knex): Promise<void> {
     
     CREATE TABLE playlist (
       id SERIAL PRIMARY KEY,
-      nome VARCHAR(45) NOT NULL,
+      nome VARCHAR(255) NOT NULL,
     
       usuario_id INTEGER REFERENCES usuario (id)
     );
@@ -45,7 +45,7 @@ export async function up(knex: Knex): Promise<void> {
     
     CREATE TABLE categoria (
       id SERIAL PRIMARY KEY,
-      descricao VARCHAR(45) NOT NULL
+      descricao VARCHAR(255) NOT NULL
     );
     
     CREATE TABLE video_has_categoria (
@@ -102,7 +102,7 @@ export async function up(knex: Knex): Promise<void> {
     CREATE TABLE comentario (
       usuario_id INTEGER REFERENCES usuario (id),
       video_id INTEGER REFERENCES video (id),
-      texto VARCHAR(45) NOT NULL
+      texto VARCHAR(255) NOT NULL
     );
     
     ALTER TABLE comentario
@@ -110,7 +110,7 @@ export async function up(knex: Knex): Promise<void> {
     
     CREATE TABLE post (
       id SERIAL PRIMARY KEY,
-      texto VARCHAR(45) NOT NULL,
+      texto VARCHAR(255) NOT NULL,
     
       canal_id INTEGER REFERENCES canal (id)
     );  
@@ -119,21 +119,21 @@ export async function up(knex: Knex): Promise<void> {
 
 export async function down(knex: Knex): Promise<void> {
   return knex.raw(`
-    DROP TABLE IF EXISTS usuario;
-    DROP TABLE IF EXISTS canal;
-    DROP TABLE IF EXISTS video;
-    DROP TABLE IF EXISTS playlist;
-    DROP TABLE IF EXISTS playlist_has_video;
-    DROP TABLE IF EXISTS categoria;
-    DROP TABLE IF EXISTS video_has_categoria;
-    DROP TABLE IF EXISTS ad;
-    DROP TABLE IF EXISTS ad_has_categoria;
-    DROP TABLE IF EXISTS historico;
-    DROP TABLE IF EXISTS historico_has_video;
-    DROP TABLE IF EXISTS likes;
-    DROP TABLE IF EXISTS assistir_mais_tarde;
-    DROP TABLE IF EXISTS comentario;
-    DROP TABLE IF EXISTS canal;
-    DROP TABLE IF EXISTS post;
+    DROP TABLE IF EXISTS video CASCADE;
+    DROP TABLE IF EXISTS canal CASCADE;
+    DROP TABLE IF EXISTS usuario CASCADE;
+    DROP TABLE IF EXISTS playlist CASCADE;
+    DROP TABLE IF EXISTS playlist_has_video CASCADE;
+    DROP TABLE IF EXISTS categoria CASCADE;
+    DROP TABLE IF EXISTS video_has_categoria CASCADE;
+    DROP TABLE IF EXISTS ad CASCADE;
+    DROP TABLE IF EXISTS ad_has_categoria CASCADE;
+    DROP TABLE IF EXISTS historico CASCADE;
+    DROP TABLE IF EXISTS historico_has_video CASCADE;
+    DROP TABLE IF EXISTS likes CASCADE;
+    DROP TABLE IF EXISTS assistir_mais_tarde CASCADE;
+    DROP TABLE IF EXISTS comentario CASCADE;
+    DROP TABLE IF EXISTS canal CASCADE;
+    DROP TABLE IF EXISTS post CASCADE;
   `);
 }

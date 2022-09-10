@@ -7,15 +7,15 @@ const config: { [key: string]: Knex.Config } = {
     client: 'postgresql',
     connection: {
       database: 'youtube2',
-      user: 'postgres',
-      password: 'postgres',
+      user: 'mvinn',
+      password: 'mvinn',
     },
     migrations: {
-      directory: './src/migrations',
+      directory: './src/database/migrations',
     },
     seeds: {
-      directory: './src/seeds'
-  }
+      directory: './src/database/seeds',
+    },
   },
 };
 
