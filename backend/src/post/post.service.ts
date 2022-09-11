@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import { InjectKnex, Knex } from 'nestjs-knex';
+import { CRUD } from '../utils';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostService {
+  CRUD: CRUD;
+
+  constructor(@InjectKnex() private readonly knex: Knex) {
+    this.knex = knex;
+    this.CRUD = new CRUD(this.knex);
+  }
+
   create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+    return this.CRUD.create('post', [createPostDto]);
   }
 
-  findAll() {
-    return `This action returns all post`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  findAll(canal_id: number) {
+    return this.CRUD.read('post', `WHERE canal_id = ${canal_id}`);
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+    return this.CRUD.update('post', updatePostDto, `WHERE id = ${id}`);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} post`;
+    return this.CRUD.delete('post', `WHERE id = ${id}`);
   }
 }

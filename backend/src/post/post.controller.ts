@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -12,14 +20,9 @@ export class PostController {
     return this.postService.create(createPostDto);
   }
 
-  @Get()
-  findAll() {
-    return this.postService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+  @Get(':canal_id')
+  findAll(@Param('canal_id') canal_id: number) {
+    return this.postService.findAll(canal_id);
   }
 
   @Patch(':id')

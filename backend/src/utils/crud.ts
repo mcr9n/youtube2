@@ -25,7 +25,7 @@ export class CRUD {
       ${where}
     `);
 
-    return queryResponse;
+    return queryResponse.rows;
   }
 
   async update(
