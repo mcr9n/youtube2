@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { KnexModule } from 'nestjs-knex';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsuarioModule } from './usuario/usuario.module';
+import { VideoModule } from './video/video.module';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -11,6 +14,9 @@ import { AppService } from './app.service';
         connection: 'postgresql://mvinn:mvinn@localhost/youtube2',
       },
     }),
+    UsuarioModule,
+    VideoModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
