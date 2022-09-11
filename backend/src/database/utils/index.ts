@@ -6,22 +6,26 @@ import { Knex } from 'nestjs-knex';
 export default class SeedUtils {
   randomArrayElement = (array) =>
     array[Math.floor(Math.random() * array.length)];
-  //tentando resolver conflito de chaves
-  // combineArrays(arr1: any[], arr2: any[]) {
-  //     const [lessLength, moreLength] =
-  //       arr1.length < arr2.length ? [arr1, arr2] : [arr2, arr1];
 
-  //     return lessLength.map((e) => {
-  //       const index = Math.floor(Math.random() * moreLength.length);
-  //       const element = moreLength[index];
-  //       moreLength.splice(index, 1);
-  //       return [e, element];
-  //     });
-  //   }
+  combineUniqueArrays(n: number, arr1: any[], arr2: any[]): [number, number][] {
+    const combinations = new Set<string>();
+
+    while (combinations.size < n) {
+      const randomIndex1 = Math.floor(Math.random() * arr1.length);
+      const randomIndex2 = Math.floor(Math.random() * arr2.length);
+
+      combinations.add([randomIndex1, randomIndex2].toString());
+    }
+
+    return Array.from(combinations).map((combination) => {
+      const [i1, i2] = combination.split(',');
+      return [arr1[i1], arr2[i2]];
+    });
+  }
 
   createRandomUsers(n: number) {
     return Array.from({ length: n }).map(() => ({
-      nome: faker.name.firstName(),
+      nome: faker.name.fullName().replace(/'/g, ''),
       email: faker.internet.email(),
       data_de_criacao: faker.date.past().toISOString(),
     }));
@@ -50,25 +54,33 @@ export default class SeedUtils {
       canal_id: this.randomArrayElement(canal_ids),
     }));
   }
+
   createRandomPost(n: number, canal_ids: number[]) {
     return Array.from({ length: n }).map(() => ({
       texto: faker.lorem.sentence(),
       canal_id: this.randomArrayElement(canal_ids),
     }));
   }
+
   createRandomComment(n: number, usuario_ids: number[], video_ids: number[]) {
-    return Array.from({ length: n }).map(() => ({
+    const idsCombination = this.combineUniqueArrays(n, usuario_ids, video_ids);
+
+    return idsCombination.map(([usuario_id, video_id]) => ({
       texto: faker.lorem.sentence(),
-      video_id: this.randomArrayElement(video_ids),
-      usuario_id: this.randomArrayElement(usuario_ids),
+      video_id: video_id,
+      usuario_id: usuario_id,
     }));
   }
+
   createRandomLike(n: number, usuario_ids: number[], video_ids: number[]) {
-    return Array.from({ length: n }).map(() => ({
-      video_id: this.randomArrayElement(video_ids),
-      usuario_id: this.randomArrayElement(usuario_ids),
+    const idsCombination = this.combineUniqueArrays(n, usuario_ids, video_ids);
+
+    return idsCombination.map(([usuario_id, video_id]) => ({
+      video_id: video_id,
+      usuario_id: usuario_id,
     }));
   }
+
   createRandomWatchLater(
     n: number,
     usuario_ids: number[],
@@ -79,66 +91,90 @@ export default class SeedUtils {
       usuario_id: this.randomArrayElement(usuario_ids),
     }));
   }
+
   createRandomHistory(n: number, usuario_ids: number[]) {
     return Array.from({ length: n }).map((e, i) => ({
       usuario_id: usuario_ids[i],
     }));
   }
+
   createRandomHistoryHasVideo(
     n: number,
     video_ids: number[],
     historico_ids: number[],
   ) {
-    return Array.from({ length: n }).map((e, i) => ({
+    const idsCombination = this.combineUniqueArrays(
+      n,
+      video_ids,
+      historico_ids,
+    );
+
+    return idsCombination.map(([video_id, historico_id]) => ({
       data_e_hora: faker.date.past().toISOString(),
-      video_id: this.randomArrayElement(video_ids),
-      historico_id: this.randomArrayElement(historico_ids),
+      video_id: video_id,
+      historico_id: historico_id,
     }));
   }
+
   createRandomPlaylist(n: number, usuario_ids: number[]) {
     return Array.from({ length: n }).map((e, i) => ({
       nome: faker.music.genre(),
       usuario_id: this.randomArrayElement(usuario_ids),
     }));
   }
+
   createRandomPlaylistHasVideo(
     n: number,
     playlist_ids: number[],
     video_ids: number[],
   ) {
-    return Array.from({ length: n }).map((e, i) => ({
-      video_id: this.randomArrayElement(video_ids),
-      playlist_id: this.randomArrayElement(playlist_ids),
+    const idsCombination = this.combineUniqueArrays(n, playlist_ids, video_ids);
+
+    return idsCombination.map(([playlist_id, video_id]) => ({
+      video_id: video_id,
+      playlist_id: playlist_id,
     }));
   }
+
   createRandomCategoria(n: number) {
     return Array.from({ length: n }).map((e, i) => ({
       descricao: faker.music.genre(),
     }));
   }
+
   createRandomVideoHasCategoria(
     n: number,
     categoria_ids: number[],
     video_ids: number[],
   ) {
-    return Array.from({ length: n }).map((e, i) => ({
-      video_id: this.randomArrayElement(video_ids),
-      categoria_id: this.randomArrayElement(categoria_ids),
+    const idsCombination = this.combineUniqueArrays(
+      n,
+      categoria_ids,
+      video_ids,
+    );
+
+    return idsCombination.map(([categoria_id, video_id]) => ({
+      video_id: video_id,
+      categoria_id: categoria_id,
     }));
   }
+
   createRandomAd(n: number) {
     return Array.from({ length: n }).map(() => ({
       duracao: faker.random.numeric(3),
     }));
   }
+
   createRandomAdHasCategoria(
     n: number,
     categoria_ids: number[],
     ad_ids: number[],
   ) {
-    return Array.from({ length: n }).map((e, i) => ({
-      ad_id: this.randomArrayElement(ad_ids),
-      categoria_id: this.randomArrayElement(categoria_ids),
+    const idsCombination = this.combineUniqueArrays(n, categoria_ids, ad_ids);
+
+    return idsCombination.map(([categoria_id, ad_id]) => ({
+      ad_id: ad_id,
+      categoria_id: categoria_id,
     }));
   }
 
@@ -146,7 +182,7 @@ export default class SeedUtils {
     knex: Knex,
     table: string,
     datas: { [key: string]: any }[],
-    has_id: boolean = true,
+    has_id = true,
   ): Promise<number[]> {
     const keys = Object.keys(datas[0]);
 

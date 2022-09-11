@@ -24,101 +24,145 @@ export async function seed(knex: Knex): Promise<void> {
   DELETE FROM categoria;
     `);
 
+  const QUANT_USUARIO = 10000;
+
+  const QUANTS = {
+    usuario: QUANT_USUARIO,
+    canal: QUANT_USUARIO,
+    video: 10000,
+    video_has_categoria: 100000,
+    ad: 100,
+    ad_has_categoria: 100,
+    categoria: 100,
+    post: 1000,
+    historico: QUANT_USUARIO,
+    historico_has_video: 100000,
+    assistir_mais_tarde: 1000,
+    likes: 100000,
+    comentario: 100000,
+    playlist: 100,
+    playlist_has_video: 1000,
+  };
+
   // Inserts seed entries
   const userIdsCreated = await seedUtils.insertData(
     knex,
     'usuario',
-    seedUtils.createRandomUsers(100),
+    seedUtils.createRandomUsers(QUANTS.usuario),
   );
 
   const channelIdsCreated = await seedUtils.insertData(
     knex,
     'canal',
-    seedUtils.createRandomChannels(5, userIdsCreated),
+    seedUtils.createRandomChannels(QUANTS.canal, userIdsCreated),
   );
 
   const videoIdsCreated = await seedUtils.insertData(
     knex,
     'video',
-    seedUtils.createRandomVideos(100, channelIdsCreated),
+    seedUtils.createRandomVideos(QUANTS.video, channelIdsCreated),
   );
-  const postIdsCreated = await seedUtils.insertData(
+
+  await seedUtils.insertData(
     knex,
     'post',
-    seedUtils.createRandomPost(5, channelIdsCreated),
+    seedUtils.createRandomPost(QUANTS.post, channelIdsCreated),
   );
+
   await seedUtils.insertData(
     knex,
     'comentario',
-    seedUtils.createRandomComment(5, userIdsCreated, videoIdsCreated),
+    seedUtils.createRandomComment(
+      QUANTS.comentario,
+      userIdsCreated,
+      videoIdsCreated,
+    ),
     false,
   );
+
   await seedUtils.insertData(
     knex,
     'likes',
-    seedUtils.createRandomLike(5, userIdsCreated, videoIdsCreated),
+    seedUtils.createRandomLike(QUANTS.likes, userIdsCreated, videoIdsCreated),
     false,
   );
+
   await seedUtils.insertData(
     knex,
     'assistir_mais_tarde',
-    seedUtils.createRandomWatchLater(5, userIdsCreated, videoIdsCreated),
+    seedUtils.createRandomWatchLater(
+      QUANTS.assistir_mais_tarde,
+      userIdsCreated,
+      videoIdsCreated,
+    ),
     false,
   );
+
   const historyIdsCreated = await seedUtils.insertData(
     knex,
     'historico',
     seedUtils.createRandomHistory(userIdsCreated.length, userIdsCreated),
   );
+
   await seedUtils.insertData(
     knex,
     'historico_has_video',
     seedUtils.createRandomHistoryHasVideo(
-      5,
+      QUANTS.historico_has_video,
       videoIdsCreated,
       historyIdsCreated,
     ),
     false,
   );
+
   const playlistIdsCreated = await seedUtils.insertData(
     knex,
     'playlist',
-    seedUtils.createRandomPlaylist(5, userIdsCreated),
+    seedUtils.createRandomPlaylist(QUANTS.playlist, userIdsCreated),
   );
+
   await seedUtils.insertData(
     knex,
     'playlist_has_video',
     seedUtils.createRandomPlaylistHasVideo(
-      5,
+      QUANTS.playlist_has_video,
       playlistIdsCreated,
       videoIdsCreated,
     ),
     false,
   );
+
   const categoriaIdsCreated = await seedUtils.insertData(
     knex,
     'categoria',
-    seedUtils.createRandomCategoria(5),
+    seedUtils.createRandomCategoria(QUANTS.categoria),
   );
+
   await seedUtils.insertData(
     knex,
     'video_has_categoria',
     seedUtils.createRandomVideoHasCategoria(
-      5,
+      QUANTS.video_has_categoria,
       categoriaIdsCreated,
       videoIdsCreated,
     ),
     false,
   );
+
   const adIdsCreated = await seedUtils.insertData(
     knex,
     'ad',
-    seedUtils.createRandomAd(5),
+    seedUtils.createRandomAd(QUANTS.ad),
   );
+
   await seedUtils.insertData(
     knex,
     'ad_has_categoria',
-    seedUtils.createRandomAdHasCategoria(5, categoriaIdsCreated, adIdsCreated),
+    seedUtils.createRandomAdHasCategoria(
+      QUANTS.ad_has_categoria,
+      categoriaIdsCreated,
+      adIdsCreated,
+    ),
     false,
   );
 

@@ -5,7 +5,7 @@ import { InjectKnex, Knex } from 'nestjs-knex';
 export class AppController {
   constructor(@InjectKnex() private readonly knex: Knex) {}
 
-  @Get()
+  @Get('users')
   async getHello() {
     if (!(await this.knex.schema.hasTable('users')))
       await this.knex.schema.createTable('users', (table) => {
@@ -13,7 +13,7 @@ export class AppController {
         table.string('name');
       });
 
-    const users = await this.knex.raw('select * from video');
+    const users = await this.knex.raw('select * from usuario LIMIT 30;');
     return { users };
   }
 }

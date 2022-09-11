@@ -8,7 +8,7 @@ import { AppService } from './app.service';
     KnexModule.forRoot({
       config: {
         client: 'pg',
-        connection: 'postgresql://postgres:postgres@localhost/youtube2',
+        connection: 'postgresql://mvinn:mvinn@localhost/youtube2',
       },
     }),
   ],
