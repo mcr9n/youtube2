@@ -14,7 +14,7 @@ export async function up(knex: Knex): Promise<void> {
       nome VARCHAR(255) NOT NULL,
       sobre VARCHAR(255) NOT NULL,
     
-      usuario_id INTEGER REFERENCES usuario (id) on delete cascade
+      usuario_id INTEGER REFERENCES usuario (id) ON DELETE CASCADE
     );
     
     CREATE TABLE video (
@@ -25,19 +25,19 @@ export async function up(knex: Knex): Promise<void> {
       thumbnail BYTEA NOT NULL,
       data_de_criacao TIMESTAMP,
     
-      canal_id INTEGER REFERENCES canal (id) on delete cascade
+      canal_id INTEGER REFERENCES canal (id) ON DELETE CASCADE
     );
     
     CREATE TABLE playlist (
       id SERIAL PRIMARY KEY,
       nome VARCHAR(255) NOT NULL,
     
-      usuario_id INTEGER REFERENCES usuario (id) on delete cascade
+      usuario_id INTEGER REFERENCES usuario (id) ON DELETE CASCADE
     );
     
     CREATE TABLE playlist_has_video (
-      playlist_id INTEGER REFERENCES playlist (id) on delete cascade,
-      video_id INTEGER REFERENCES video (id) on delete cascade
+      playlist_id INTEGER REFERENCES playlist (id) ON DELETE CASCADE,
+      video_id INTEGER REFERENCES video (id) ON DELETE CASCADE
     );
     
     ALTER TABLE playlist_has_video
@@ -49,8 +49,8 @@ export async function up(knex: Knex): Promise<void> {
     );
     
     CREATE TABLE video_has_categoria (
-      categoria_id INTEGER REFERENCES categoria (id) on delete cascade,
-      video_id INTEGER REFERENCES video (id) on delete cascade
+      categoria_id INTEGER REFERENCES categoria (id) ON DELETE CASCADE,
+      video_id INTEGER REFERENCES video (id) ON DELETE CASCADE
     );
     
     ALTER TABLE video_has_categoria
@@ -62,8 +62,8 @@ export async function up(knex: Knex): Promise<void> {
     );
     
     CREATE TABLE ad_has_categoria (
-      categoria_id INTEGER REFERENCES categoria (id) on delete cascade,
-      ad_id INTEGER REFERENCES ad (id) on delete cascade
+      categoria_id INTEGER REFERENCES categoria (id) ON DELETE CASCADE,
+      ad_id INTEGER REFERENCES ad (id) ON DELETE CASCADE
     );
     
     ALTER TABLE ad_has_categoria
@@ -71,12 +71,12 @@ export async function up(knex: Knex): Promise<void> {
     
     CREATE TABLE historico (
       id SERIAL PRIMARY KEY,
-      usuario_id INTEGER REFERENCES usuario (id) on delete cascade
+      usuario_id INTEGER REFERENCES usuario (id) ON DELETE CASCADE
     );
     
     CREATE TABLE historico_has_video (
-      historico_id INTEGER REFERENCES historico (id) on delete cascade,
-      video_id INTEGER REFERENCES video (id) on delete cascade,
+      historico_id INTEGER REFERENCES historico (id) ON DELETE CASCADE,
+      video_id INTEGER REFERENCES video (id) ON DELETE CASCADE,
       data_e_hora TIMESTAMP
     );
     
@@ -84,24 +84,24 @@ export async function up(knex: Knex): Promise<void> {
       ADD PRIMARY KEY (historico_id, video_id);
     
     CREATE TABLE likes (
-      usuario_id INTEGER REFERENCES usuario (id) on delete cascade,
-      video_id INTEGER REFERENCES video (id) on delete cascade
+      usuario_id INTEGER REFERENCES usuario (id) ON DELETE CASCADE,
+      video_id INTEGER REFERENCES video (id) ON DELETE CASCADE
     );
     
     ALTER TABLE likes
       ADD PRIMARY KEY (usuario_id, video_id);
     
     CREATE TABLE assistir_mais_tarde (
-      usuario_id INTEGER REFERENCES usuario (id) on delete cascade,
-      video_id INTEGER REFERENCES video (id) on delete cascade
+      usuario_id INTEGER REFERENCES usuario (id) ON DELETE CASCADE,
+      video_id INTEGER REFERENCES video (id) ON DELETE CASCADE
     );
     
     ALTER TABLE assistir_mais_tarde
       ADD PRIMARY KEY (usuario_id, video_id);
     
     CREATE TABLE comentario (
-      usuario_id INTEGER REFERENCES usuario (id) on delete cascade,
-      video_id INTEGER REFERENCES video (id) on delete cascade,
+      usuario_id INTEGER REFERENCES usuario (id) ON DELETE CASCADE,
+      video_id INTEGER REFERENCES video (id) ON DELETE CASCADE,
       texto VARCHAR(255) NOT NULL
     );
     
@@ -112,7 +112,7 @@ export async function up(knex: Knex): Promise<void> {
       id SERIAL PRIMARY KEY,
       texto VARCHAR(255) NOT NULL,
     
-      canal_id INTEGER REFERENCES canal (id) on delete cascade
+      canal_id INTEGER REFERENCES canal (id) ON DELETE CASCADE
     );  
   `);
 }

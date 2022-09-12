@@ -5,11 +5,7 @@ import type { Knex } from 'knex';
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'postgresql',
-    connection: {
-      database: 'youtube2',
-      user: 'postgres',
-      password: 'postgres',
-    },
+    connection: process.env.DB_URL,
     migrations: {
       directory: './src/database/migrations',
     },

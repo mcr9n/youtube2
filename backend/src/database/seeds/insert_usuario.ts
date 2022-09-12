@@ -1,5 +1,4 @@
 import { Knex } from 'knex';
-import { Buffer } from 'buffer';
 import SeedUtils from '../utils';
 
 const seedUtils = new SeedUtils();
@@ -34,7 +33,7 @@ export async function seed(knex: Knex): Promise<void> {
     ad: 100,
     ad_has_categoria: 100,
     categoria: 100,
-    post: 1000,
+    post: 10000,
     historico: QUANT_USUARIO,
     historico_has_video: 100000,
     assistir_mais_tarde: 1000,

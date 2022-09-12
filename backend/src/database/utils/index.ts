@@ -10,17 +10,16 @@ export default class SeedUtils {
   combineUniqueArrays(n: number, arr1: any[], arr2: any[]): [number, number][] {
     const combinations = new Set<string>();
 
-    while (combinations.size < n) {
-      const randomIndex1 = Math.floor(Math.random() * arr1.length);
-      const randomIndex2 = Math.floor(Math.random() * arr2.length);
+    for (let i = 0; i < n; i++) {
+      const randomElem1 = Math.floor(Math.random() * arr1.length);
+      const randomElem2 = Math.floor(Math.random() * arr2.length);
 
-      combinations.add([randomIndex1, randomIndex2].toString());
+      combinations.add([arr1[randomElem1], arr2[randomElem2]].toString());
     }
 
-    return Array.from(combinations).map((combination) => {
-      const [i1, i2] = combination.split(',');
-      return [arr1[i1], arr2[i2]];
-    });
+    return Array.from(combinations).map(
+      (combination) => combination.split(',').map(Number) as [number, number],
+    );
   }
 
   createRandomUsers(n: number) {
