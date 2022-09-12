@@ -19,6 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "preknex:seed": "knex --knexfile knexfile.ts migrate:rollback --all && knex --knexfile knexfile.ts migrate:latest",
     "knex:seed": "knex --knexfile knexfile.ts seed:run",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest"
   },
@@ -28,6 +29,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "dotenv": "^16.0.2",
     "knex": "^2.2.0",
     "nestjs-knex": "^2.0.0",
     "pg": "^8.8.0",

@@ -116,7 +116,7 @@ export default class SeedUtils {
   }
 
   createRandomPlaylist(n: number, usuario_ids: number[]) {
-    return Array.from({ length: n }).map((e, i) => ({
+    return Array.from({ length: n }).map(() => ({
       nome: faker.music.genre(),
       usuario_id: this.randomArrayElement(usuario_ids),
     }));
@@ -136,7 +136,7 @@ export default class SeedUtils {
   }
 
   createRandomCategoria(n: number) {
-    return Array.from({ length: n }).map((e, i) => ({
+    return Array.from({ length: n }).map(() => ({
       descricao: faker.music.genre(),
     }));
   }

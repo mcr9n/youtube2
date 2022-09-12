@@ -4,25 +4,6 @@ import SeedUtils from '../utils';
 const seedUtils = new SeedUtils();
 
 export async function seed(knex: Knex): Promise<void> {
-  // Deletes ALL existing entries
-  await knex.raw(`
-  DELETE FROM ad_has_categoria;
-  DELETE FROM video_has_categoria;
-  DELETE FROM playlist_has_video;
-  DELETE FROM playlist;
-  DELETE FROM comentario;
-  DELETE FROM likes;
-  DELETE FROM assistir_mais_tarde;
-  DELETE FROM historico_has_video;
-  DELETE FROM historico;
-  DELETE FROM post;
-  DELETE FROM ad;
-  DELETE FROM video;
-  DELETE FROM canal;
-  DELETE FROM usuario;
-  DELETE FROM categoria;
-    `);
-
   const QUANT_USUARIO = 10000;
 
   const QUANTS = {
@@ -33,7 +14,7 @@ export async function seed(knex: Knex): Promise<void> {
     ad: 100,
     ad_has_categoria: 100,
     categoria: 100,
-    post: 10000,
+    post: 5000,
     historico: QUANT_USUARIO,
     historico_has_video: 100000,
     assistir_mais_tarde: 1000,
@@ -49,24 +30,28 @@ export async function seed(knex: Knex): Promise<void> {
     'usuario',
     seedUtils.createRandomUsers(QUANTS.usuario),
   );
+  console.log(`${QUANTS.usuario} usuario criados`);
 
   const channelIdsCreated = await seedUtils.insertData(
     knex,
     'canal',
     seedUtils.createRandomChannels(QUANTS.canal, userIdsCreated),
   );
+  console.log(`${QUANTS.canal} canal criados`);
 
   const videoIdsCreated = await seedUtils.insertData(
     knex,
     'video',
     seedUtils.createRandomVideos(QUANTS.video, channelIdsCreated),
   );
+  console.log(`${QUANTS.video} video criados`);
 
   await seedUtils.insertData(
     knex,
     'post',
     seedUtils.createRandomPost(QUANTS.post, channelIdsCreated),
   );
+  console.log(`${QUANTS.post} post criados`);
 
   await seedUtils.insertData(
     knex,
@@ -78,6 +63,7 @@ export async function seed(knex: Knex): Promise<void> {
     ),
     false,
   );
+  console.log(`${QUANTS.comentario} comentario criados`);
 
   await seedUtils.insertData(
     knex,
@@ -85,6 +71,7 @@ export async function seed(knex: Knex): Promise<void> {
     seedUtils.createRandomLike(QUANTS.likes, userIdsCreated, videoIdsCreated),
     false,
   );
+  console.log(`${QUANTS.likes} likes criados`);
 
   await seedUtils.insertData(
     knex,
@@ -96,12 +83,14 @@ export async function seed(knex: Knex): Promise<void> {
     ),
     false,
   );
+  console.log(`${QUANTS.assistir_mais_tarde} assistir_mais_tarde criados`);
 
   const historyIdsCreated = await seedUtils.insertData(
     knex,
     'historico',
     seedUtils.createRandomHistory(userIdsCreated.length, userIdsCreated),
   );
+  console.log(`${QUANTS.historico} historico criados`);
 
   await seedUtils.insertData(
     knex,
@@ -113,12 +102,14 @@ export async function seed(knex: Knex): Promise<void> {
     ),
     false,
   );
+  console.log(`${QUANTS.historico_has_video} historico_has_video criados`);
 
   const playlistIdsCreated = await seedUtils.insertData(
     knex,
     'playlist',
     seedUtils.createRandomPlaylist(QUANTS.playlist, userIdsCreated),
   );
+  console.log(`${QUANTS.playlist} playlist criados`);
 
   await seedUtils.insertData(
     knex,
@@ -130,12 +121,14 @@ export async function seed(knex: Knex): Promise<void> {
     ),
     false,
   );
+  console.log(`${QUANTS.playlist_has_video} playlist_has_video criados`);
 
   const categoriaIdsCreated = await seedUtils.insertData(
     knex,
     'categoria',
     seedUtils.createRandomCategoria(QUANTS.categoria),
   );
+  console.log(`${QUANTS.categoria} categoria criados`);
 
   await seedUtils.insertData(
     knex,
@@ -147,12 +140,14 @@ export async function seed(knex: Knex): Promise<void> {
     ),
     false,
   );
+  console.log(`${QUANTS.video_has_categoria} video_has_categoria criados`);
 
   const adIdsCreated = await seedUtils.insertData(
     knex,
     'ad',
     seedUtils.createRandomAd(QUANTS.ad),
   );
+  console.log(`${QUANTS.ad} ad criados`);
 
   await seedUtils.insertData(
     knex,
@@ -164,6 +159,7 @@ export async function seed(knex: Knex): Promise<void> {
     ),
     false,
   );
+  console.log(`${QUANTS.ad_has_categoria} ad_has_categoria criados`);
 
   // const res = await knex.raw(`select * from video;`);
   // const file = Buffer.from(res.rows[0].thumbnail, 'base64');
