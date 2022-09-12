@@ -1,8 +1,7 @@
-import { Knex } from "knex";
-
+import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
-    return knex.raw(`
+  return knex.raw(`
     CREATE VIEW videos_com_likes AS
     select video.*, count(likes.video_id) as likes
     from video
@@ -11,11 +10,9 @@ export async function up(knex: Knex): Promise<void> {
   `);
 }
 
-
 export async function down(knex: Knex): Promise<void> {
-    return knex.raw(`
+  return knex.raw(`
     drop view videos_com_likes;
 
   `);
 }
-

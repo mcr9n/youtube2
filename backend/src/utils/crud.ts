@@ -3,20 +3,20 @@ import { Knex } from 'knex';
 export class CRUD {
   constructor(private readonly knex: Knex) {}
 
-  async create(table: string, datas: { [key: string]: any }[]): Promise<any> {
-    const keys = Object.keys(datas[0]);
+  async create(table: string, data: { [key: string]: any }): Promise<any> {
+    const keys = Object.keys(data);
 
-    // (data[0].nome, data[0].email), (...), ...
-    const dataFormatted = datas
-      .map((data) => '(' + keys.map((key) => `'${data[key]}'`).join(',') + ')')
-      .join(',');
+    // (data.nome, data.email, ...)
+    const dataFormatted =
+      '(' + keys.map((key) => `'${data[key]}'`).join(',') + ')';
 
     const queryResponse = await this.knex.raw(`
       INSERT INTO ${table} (${keys})
       VALUES ${dataFormatted}
+      RETURNING *
     `);
 
-    return queryResponse;
+    return queryResponse.rows[0];
   }
 
   async read(table: string, where: string): Promise<any> {
@@ -44,9 +44,10 @@ export class CRUD {
       UPDATE ${table}
       SET ${dataFormatted}
       ${where}
+      RETURNING *
     `);
 
-    return queryResponse;
+    return queryResponse.rows[0];
   }
 
   async delete(table: string, where: string): Promise<any> {
@@ -55,6 +56,6 @@ export class CRUD {
       ${where}
     `);
 
-    return queryResponse;
+    return queryResponse.rows;
   }
 }

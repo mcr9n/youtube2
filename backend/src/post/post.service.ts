@@ -14,7 +14,7 @@ export class PostService {
   }
 
   create(createPostDto: CreatePostDto) {
-    return this.CRUD.create('post', [createPostDto]);
+    return this.CRUD.create('post', createPostDto);
   }
 
   findAll(canal_id: number) {

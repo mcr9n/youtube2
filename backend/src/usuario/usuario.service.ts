@@ -4,8 +4,6 @@ import { CRUD } from '../utils';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
-
-
 @Injectable()
 export class UsuarioService {
   CRUD: CRUD;
@@ -14,11 +12,9 @@ export class UsuarioService {
     this.knex = knex;
     this.CRUD = new CRUD(this.knex);
   }
-  
-
 
   create(createUsuarioDto: CreateUsuarioDto) {
-    return this.CRUD.create('usuario', [createUsuarioDto]);
+    return this.CRUD.create('usuario', createUsuarioDto);
   }
 
   findOne(id: number) {
