@@ -12,11 +12,6 @@ export class UsuarioController {
     return this.usuarioService.create(createUsuarioDto);
   }
 
-  @Get()
-  findAll() {
-    return this.usuarioService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usuarioService.findOne(+id);

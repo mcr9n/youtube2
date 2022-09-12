@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectKnex, Knex } from 'nestjs-knex';
+import { CRUD } from '../utils';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
@@ -7,28 +8,28 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
 @Injectable()
 export class UsuarioService {
-  constructor(
-    @InjectKnex() private readonly knex: Knex,
-  ) {}
+  CRUD: CRUD;
+
+  constructor(@InjectKnex() private readonly knex: Knex) {
+    this.knex = knex;
+    this.CRUD = new CRUD(this.knex);
+  }
+  
 
 
   create(createUsuarioDto: CreateUsuarioDto) {
-    return 'This action adds a new usuario';
-  }
-
-  findAll() {
-    return `This action returns all usuario`;
+    return this.CRUD.create('usuario', [createUsuarioDto]);
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+    return this.CRUD.read('usuario', `where id = ${id}`);
   }
 
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+    return this.CRUD.update('usuario', updateUsuarioDto, `where id = ${id}`);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} usuario`;
+    return this.CRUD.delete('usuario', `where id = ${id}`);
   }
 }

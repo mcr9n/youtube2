@@ -11,7 +11,7 @@ import { PostModule } from './post/post.module';
     KnexModule.forRoot({
       config: {
         client: 'pg',
-        connection: 'postgresql://mvinn:mvinn@localhost/youtube2',
+        connection: 'postgresql://postgres:postgres@localhost/youtube2',
       },
     }),
     UsuarioModule,
