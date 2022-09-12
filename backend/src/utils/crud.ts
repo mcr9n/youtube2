@@ -54,7 +54,8 @@ export class CRUD {
     const queryResponse = await this.knex.raw(`
       DELETE FROM ${table}
       ${where}
-    `);
+      RETURNING *
+      `);
 
     return queryResponse.rows;
   }
