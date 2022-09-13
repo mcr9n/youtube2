@@ -31,6 +31,6 @@ export class VideoService {
   }
 
   remove(id: number) {
-    return this.CRUD.delete('video', `where video.id = ${id} `);
+    return this.CRUD.delete('video', `where video.id = ${id}` );
   }
 }
