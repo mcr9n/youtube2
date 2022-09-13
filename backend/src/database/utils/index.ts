@@ -41,7 +41,7 @@ export default class SeedUtils {
   createRandomVideos(n: number, canal_ids: number[]) {
     const qualities = [144, 360, 480, 720, 1080];
 
-    const filePath = path.resolve(__dirname, '..', 'images', 'apple.jpg');
+    const filePath = path.resolve(__dirname, '..', 'assets', 'apple.jpg');
     const file = fs.readFileSync(filePath, { encoding: 'base64' });
 
     return Array.from({ length: n }).map(() => ({
