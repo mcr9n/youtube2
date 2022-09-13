@@ -15,7 +15,7 @@ export class VideoService {
   }
 
   create(createVideoDto: CreateVideoDto) {
-    return this.CRUD.create('video', [createVideoDto]);
+    return this.CRUD.create('video', createVideoDto);
   }
 
   findAll() {
@@ -23,14 +23,14 @@ export class VideoService {
   }
 
   findOne(id: number) {
-    return this.CRUD.read('video', `video.id = ${id}`);
+    return this.CRUD.read('video', `where video.id = ${id}`);
   }
 
   update(id: number, updateVideoDto: UpdateVideoDto) {
-    return this.CRUD.update('youtube', updateVideoDto, `video.id == ${id}`);
+    return this.CRUD.update('video', updateVideoDto, `where video.id = ${id}`);
   }
 
   remove(id: number) {
-    return this.CRUD.delete('youtube', `video.id == ${id} `);
+    return this.CRUD.delete('video', `where video.id = ${id} `);
   }
 }
