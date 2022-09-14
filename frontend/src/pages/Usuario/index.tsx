@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import DataTable, { TableColumn } from 'react-data-table-component'
 import { Button, LinearProgress } from '@material-ui/core'
+import Link from '../../components/Link'
 
 const Container = styled.div`
   display: flex;
@@ -83,13 +84,7 @@ function Usuario() {
     <Container>
       <Header>
         <h1>Usuario</h1>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ alignSelf: 'right' }}
-        >
-          Novo Usuário
-        </Button>
+        <Link to="/usuario/novo">Novo Usuário</Link>
       </Header>
 
       {users.length > 0 ? (
