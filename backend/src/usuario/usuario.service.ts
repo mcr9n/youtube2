@@ -21,6 +21,10 @@ export class UsuarioService {
     return this.CRUD.read('usuario', `where id = ${id}`);
   }
 
+  findAll() {
+    return this.CRUD.read('usuario', ``);
+  }
+
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
     return this.CRUD.update('usuario', updateUsuarioDto, `where id = ${id}`);
   }
