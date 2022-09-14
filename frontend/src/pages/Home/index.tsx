@@ -9,8 +9,6 @@ const Container = styled.div`
   gap: 12px;
 
   height: 100vh;
-  background-color: #282c34;
-  color: white;
   font-size: 24px;
   font-weight: 600;
 `
