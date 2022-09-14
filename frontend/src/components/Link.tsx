@@ -5,16 +5,16 @@ const Button = styled.button`
   padding: 8px 24px;
   border: none;
   border-radius: 8px;
-  background-color: black;
+  background-color: #6200ee;
 
   font-size: 24px;
   text-decoration: none;
   color: white;
 
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: filter 0.2s;
   :hover {
-    background-color: #282c34;
+    filter: brightness(0.9);
   }
 `
 
