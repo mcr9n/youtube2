@@ -19,7 +19,7 @@ function Home() {
       <h1>Tabelas</h1>
       <Link to="/usuario">Usuario</Link>
       <Link to="/video">Video</Link>
-      <Link to="/canal">Canal</Link>
+      <Link to="/post">Post</Link>
     </Container>
   )
 }

@@ -20,9 +20,9 @@ export class PostController {
     return this.postService.create(createPostDto);
   }
 
-  @Get(':canal_id')
-  findAll(@Param('canal_id') canal_id: number) {
-    return this.postService.findAll(canal_id);
+  @Get()
+  findAll() {
+    return this.postService.findAll();
   }
 
   @Patch(':id')

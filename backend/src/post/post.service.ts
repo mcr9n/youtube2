@@ -17,8 +17,8 @@ export class PostService {
     return this.CRUD.create('post', createPostDto);
   }
 
-  findAll(canal_id: number) {
-    return this.CRUD.read('post', `WHERE canal_id = ${canal_id}`);
+  findAll() {
+    return this.CRUD.read('post','');
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
