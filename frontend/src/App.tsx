@@ -3,7 +3,7 @@ import Home from './pages/Home'
 import Usuario from './pages/Usuario'
 import { createTheme, CssBaseline, ThemeProvider } from '@material-ui/core'
 
-const darkTheme = createTheme({ palette: { type: 'light' } })
+const darkTheme = createTheme({ palette: { type: 'dark' } })
 
 function App() {
   return (
