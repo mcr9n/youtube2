@@ -14,7 +14,8 @@ export class UsuarioService {
   }
 
   create(createUsuarioDto: CreateUsuarioDto) {
-    return this.CRUD.create('usuario', createUsuarioDto);
+
+    return this.CRUD.create('usuario', {...createUsuarioDto, data_de_criacao: new Date().toISOString()});
   }
 
   findOne(id: number) {
