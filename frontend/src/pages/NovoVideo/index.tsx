@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { Button, TextField } from '@material-ui/core'
-import { Alert, Collapse, IconButton } from '@mui/material'
-import CloseIcon from '@material-ui/icons/Close'
+import { Button, TextField, Alert, Collapse, IconButton } from '@mui/material'
+import { Close as CloseIcon } from '@mui/icons-material'
 
 const Container = styled.div`
   display: flex;

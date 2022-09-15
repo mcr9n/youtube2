@@ -3,12 +3,14 @@ import Home from './pages/Home'
 import Usuario from './pages/Usuario'
 import Video from './pages/Video'
 import Post from './pages/Post'
-import { createTheme, CssBaseline, ThemeProvider } from '@material-ui/core'
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import NovoUsuario from './pages/NovoUsuario'
 import NovoPost from './pages/NovoPost'
 import NovoVideo from './pages/NovoVideo'
 
-const darkTheme = createTheme({ palette: { type: 'dark' } })
+const darkTheme = createTheme({
+  palette: { mode: 'dark', background: { default: '#121212' } },
+})
 
 function App() {
   return (

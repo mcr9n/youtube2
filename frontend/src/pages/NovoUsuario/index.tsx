@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { TextField } from '@material-ui/core'
+import { TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Toast from '../../components/Toast'

@@ -1,5 +1,5 @@
 import { Alert, Collapse, IconButton } from '@mui/material'
-import CloseIcon from '@material-ui/icons/Close'
+import { Close as CloseIcon } from '@mui/icons-material'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
