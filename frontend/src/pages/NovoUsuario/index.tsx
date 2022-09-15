@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { Button, TextField } from '@material-ui/core'
-import { Alert, Collapse, IconButton } from '@mui/material'
-import CloseIcon from '@material-ui/icons/Close'
+import { TextField } from '@material-ui/core'
+import { LoadingButton } from '@mui/lab'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import Toast from '../../components/Toast'
+import { CircularProgress } from '@mui/material'
 
 const Container = styled.div`
   display: flex;
@@ -33,123 +35,88 @@ const Form = styled.form`
 //   data_de_criacao: string
 // }
 
+interface IFormInput {
+  nome: string
+  email: string
+}
+
 function NovoUsuario() {
-  const [openSuccess, setOpenSuccess] = useState<boolean>(false)
-  const [openFail, setOpenFail] = useState<boolean>(false)
-  const [nome, setNome] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IFormInput>()
 
-  const handleSubmit = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [openToast, setOpenToast] = useState<boolean>(false)
+  const [toastMessage, setToastMessage] = useState<string>('')
+  const [toastSeverity, setToastSeverity] = useState<'success' | 'error'>(
+    'success'
+  )
 
-    const user = { nome, email }
-
-    if (!validateForm()) {
-      setOpenFail(true)
-      setTimeout(() => {
-        setOpenFail(false)
-      }, 3000)
-      return
-    }
-
+  const onSubmit: SubmitHandler<IFormInput> = async user => {
+    setLoading(true)
     await axios
       .post('http://localhost:3333/usuario', user)
       .then(() => {
-        setOpenSuccess(true)
-        resetForm()
-        setTimeout(() => {
-          setOpenSuccess(false)
-        }, 3000)
+        toastUp('Usuário criado com sucesso!', 'success')
+        reset()
       })
       .catch(() => {
-        setOpenFail(false)
+        toastUp('Erro ao criar usuário!', 'error')
       })
+    setLoading(false)
   }
 
-  const resetForm = () => {
-    setNome('')
-    setEmail('')
-  }
-
-  const validateForm = () => {
-    return nome.length > 0 && email.length > 0
+  const toastUp = (message: string, severity: 'success' | 'error') => {
+    setOpenToast(true)
+    setToastMessage(message)
+    setToastSeverity(severity)
   }
 
   return (
     <Container>
       <h1>Criar usuario</h1>
 
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label="Nome"
-          id="standard-basic"
+          id="nome"
           variant="filled"
           fullWidth
-          value={nome}
-          onChange={e => setNome(e.target.value)}
+          {...register('nome', { required: true })}
+          error={!!errors.nome}
         />
         <TextField
           label="Email"
           type="email"
-          id="standard-basic"
+          id="email"
           variant="filled"
           fullWidth
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          {...register('email', { required: true })}
+          error={!!errors.email}
         />
 
-        <Button
+        <LoadingButton
           variant="contained"
           color="primary"
           size="large"
+          type="submit"
           style={{ width: '100%', maxWidth: 300 }}
-          onClick={e => handleSubmit(e)}
+          loading={loading}
+          loadingIndicator={<CircularProgress color="primary" size={16} />}
         >
           Criar
-        </Button>
+        </LoadingButton>
       </Form>
 
-      <Collapse in={openSuccess}>
-        <Alert
-          severity="success"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpenSuccess(false)
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-        >
-          Usuario criado com sucesso!
-        </Alert>
-      </Collapse>
-
-      <Collapse in={openFail}>
-        <Alert
-          severity="error"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpenFail(false)
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-        >
-          Algo deu errado!
-        </Alert>
-      </Collapse>
+      <Toast
+        message={toastMessage}
+        open={openToast}
+        setOpen={setOpenToast}
+        severity={toastSeverity}
+      />
     </Container>
   )
 }
