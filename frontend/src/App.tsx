@@ -6,6 +6,7 @@ import Post from './pages/Post'
 import { createTheme, CssBaseline, ThemeProvider } from '@material-ui/core'
 import NovoUsuario from './pages/NovoUsuario'
 import NovoPost from './pages/NovoPost'
+import NovoVideo from './pages/NovoVideo'
 
 const darkTheme = createTheme({ palette: { type: 'dark' } })
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/post" element={<Post />} />
           <Route path="/usuario/novo" element={<NovoUsuario />} />
           <Route path="/post/novo" element={<NovoPost />} />
+          <Route path="/video/novo" element={<NovoVideo />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
