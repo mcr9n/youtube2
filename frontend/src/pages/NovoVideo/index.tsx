@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { Button, TextField, Alert, Collapse, IconButton } from '@mui/material'
 import { Close as CloseIcon } from '@mui/icons-material'
+import { Input } from '@mui/material';
+import { Direction } from 'react-data-table-component'
 
 const Container = styled.div`
   display: flex;
@@ -110,16 +112,8 @@ function NovoVideo() {
           value={dataDeCriacao}
           onChange={e => setDataDeCriacao(e.target.value)}
         />
-        <TextField
-          label="Thumbnail"
-          type="email"
-          id="standard-basic"
-          variant="filled"
-          fullWidth
-          value={thumbnail}
-          onChange={e => setThumbnail(e.target.value)}
-        />
-
+        <p>Thumbnail</p>
+        <Input type='file' name='Thumbnail' fullWidth/>     
         <Button
           variant="contained"
           color="primary"

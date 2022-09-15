@@ -27,7 +27,7 @@ function Toast({ message, open, setOpen, severity }: ToastProps) {
 
   return (
     <CollapseStyled in={open}>
-      <Alert
+      <Alert style={ {backgroundColor: "white", color: "black"} }
         severity={severity}
         action={
           <IconButton
