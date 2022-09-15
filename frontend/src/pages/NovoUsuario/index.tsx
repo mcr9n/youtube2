@@ -28,13 +28,6 @@ const Form = styled.form`
   max-width: 550px;
 `
 
-// type User = {
-//   id: number
-//   nome: string
-//   email: string
-//   data_de_criacao: string
-// }
-
 interface IFormInput {
   nome: string
   email: string
