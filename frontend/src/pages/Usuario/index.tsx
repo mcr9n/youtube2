@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import DataTable, { TableColumn } from 'react-data-table-component'
-import { Button, LinearProgress } from '@material-ui/core'
+import { Button, LinearProgress } from '@mui/material'
 import Link from '../../components/Link'
 
 const Container = styled.div`
@@ -34,13 +34,6 @@ type User = {
 function Usuario() {
   const [users, setUsers] = useState<User[]>([])
 
-  const handleDelete = async (id: number) => {
-    await axios.delete(`http://localhost:3333/usuario/${id}`)
-    setUsers(users.filter(user => user.id !== id))
-  }
-
-  const handleEdit = async (id: number) => {}
-
   const columns: TableColumn<User>[] = [
     { name: 'id', selector: (row: User) => row.id, sortable: true },
     { name: 'nome', selector: (row: User) => row.nome, sortable: true },
@@ -57,6 +50,7 @@ function Usuario() {
           <Button
             variant="contained"
             size="small"
+            color="secondary"
             onClick={() => handleEdit(row.id)}
             style={{ marginRight: 8 }}
           >
@@ -65,6 +59,7 @@ function Usuario() {
           <Button
             variant="contained"
             size="small"
+            color="secondary"
             onClick={() => handleDelete(row.id)}
           >
             Excluir
@@ -73,6 +68,13 @@ function Usuario() {
       ),
     },
   ]
+
+  const handleDelete = async (id: number) => {
+    await axios.delete(`http://localhost:3333/usuario/${id}`)
+    setUsers(users.filter(user => user.id !== id))
+  }
+
+  const handleEdit = async (id: number) => {}
 
   useEffect(() => {
     axios.get('http://localhost:3333/usuario').then(response => {
