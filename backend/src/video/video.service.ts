@@ -19,7 +19,7 @@ export class VideoService {
   }
 
   findAll() {
-    return this.CRUD.read('video', ' order by data_de_criacao DESC limit 50');
+    return this.CRUD.read('videos_com_likes', ' order by data_de_criacao DESC limit 50');
   }
 
   findOne(id: number) {
