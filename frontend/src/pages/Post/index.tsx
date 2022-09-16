@@ -4,6 +4,7 @@ import axios from 'axios'
 import DataTable, { TableColumn } from 'react-data-table-component'
 import { Button, LinearProgress } from '@mui/material'
 import Link from '../../components/Link'
+import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +31,8 @@ type PostProps = {
 }
 
 function Post() {
+  let navigate = useNavigate();
+
   const [posts, setPosts] = useState<PostProps[]>([])
 
   const columns: TableColumn<PostProps>[] = [
@@ -50,6 +53,7 @@ function Post() {
             color="secondary"
             onClick={() => handleEdit(row.id)}
             style={{ marginRight: 8 }}
+            
           >
             Editar
           </Button>
@@ -71,7 +75,7 @@ function Post() {
     setPosts(posts.filter(post => post.id !== id))
   }
 
-  const handleEdit = async (id: number) => {}
+  const handleEdit = async (id: number) => {return navigate(`/post/editar/${id}`)}
 
   useEffect(() => {
     axios.get('http://localhost:3333/post').then(response => {
