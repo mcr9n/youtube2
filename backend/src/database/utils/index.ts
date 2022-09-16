@@ -48,7 +48,7 @@ export default class SeedUtils {
       titulo: faker.lorem.sentence(),
       duracao: faker.random.numeric(3),
       qualidade: this.randomArrayElement(qualities),
-      thumbnail: file, // bytea
+      thumbnail: 'data:image/jpeg;base64,' + file, // bytea
       data_de_criacao: faker.date.past().toISOString(),
       canal_id: this.randomArrayElement(canal_ids),
     }));
