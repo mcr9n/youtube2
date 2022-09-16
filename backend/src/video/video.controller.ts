@@ -6,18 +6,25 @@ import {
   Patch,
   Param,
   Delete,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { VideoService } from './video.service';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('video')
 export class VideoController {
   constructor(private readonly videoService: VideoService) {}
 
+  @UseInterceptors(FileInterceptor('thumbnail', {}))
   @Post()
-  create(@Body() createVideoDto: CreateVideoDto) {
-    return this.videoService.create(createVideoDto);
+  create(
+    @Body() createVideoDto: CreateVideoDto,
+    @UploadedFile() thumbnail: Express.Multer.File,
+  ) {
+    return this.videoService.create({ ...createVideoDto, thumbnail });
   }
 
   @Get()

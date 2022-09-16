@@ -1,4 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Body,
+  Injectable,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { InjectKnex, Knex } from 'nestjs-knex';
 import { CRUD } from '../utils/crud';
 
@@ -19,11 +25,15 @@ export class VideoService {
   }
 
   findAll() {
-    return this.CRUD.read('videos_com_likes', ' order by data_de_criacao DESC limit 50');
+    return this.CRUD.read(
+      'videos_com_likes',
+      ' order by data_de_criacao DESC limit 50',
+    );
   }
 
-  findOne(id: number) {
-    return this.CRUD.read('video', `where video.id = ${id}`);
+  async findOne(id: number) {
+    const video = await this.CRUD.read('video', `where video.id = ${id}`);
+    return video;
   }
 
   update(id: number, updateVideoDto: UpdateVideoDto) {
@@ -31,6 +41,6 @@ export class VideoService {
   }
 
   remove(id: number) {
-    return this.CRUD.delete('video', `where video.id = ${id}` );
+    return this.CRUD.delete('video', `where video.id = ${id}`);
   }
 }
