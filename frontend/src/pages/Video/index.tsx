@@ -31,6 +31,7 @@ type VideoProps = {
   duracao: number
   qualidade: number
   thumbnail: Buffer
+  likes: number
   data_de_criacao: string
 }
 
@@ -52,6 +53,11 @@ function Video() {
     {
       name: 'data_de_criacao',
       selector: (row: VideoProps) => row.data_de_criacao,
+      sortable: true,
+    },
+    {
+      name: 'likes',
+      selector: (row: VideoProps) => row.likes,
       sortable: true,
     },
     {
