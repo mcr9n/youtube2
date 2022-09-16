@@ -4,6 +4,7 @@ import axios from 'axios'
 import DataTable, { TableColumn } from 'react-data-table-component'
 import { Button, LinearProgress } from '@mui/material'
 import Link from '../../components/Link'
+import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +33,8 @@ type User = {
 }
 
 function Usuario() {
+  let navigate = useNavigate();
+
   const [users, setUsers] = useState<User[]>([])
 
   const columns: TableColumn<User>[] = [
@@ -74,7 +77,7 @@ function Usuario() {
     setUsers(users.filter(user => user.id !== id))
   }
 
-  const handleEdit = async (id: number) => {}
+  const handleEdit = async (id: number) => {return navigate(`/usuario/editar/${id}`)}
 
   useEffect(() => {
     axios.get('http://localhost:3333/usuario').then(response => {
