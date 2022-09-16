@@ -33,6 +33,7 @@ type VideoProps = {
   qualidade: number
   thumbnail: Buffer
   likes: number
+  comentarios: number
   data_de_criacao: string
 }
 
@@ -41,28 +42,46 @@ function Video() {
   const [videos, setVideos] = useState<VideoProps[]>([])
 
   const columns: TableColumn<VideoProps>[] = [
-    { name: 'id', selector: (row: VideoProps) => row.id, sortable: true },
     {
+      id: 'id',
+      name: 'id',
+      selector: (row: VideoProps) => row.id,
+      sortable: true,
+    },
+    {
+      id: 'titulo',
       name: 'titulo',
       selector: (row: VideoProps) => row.titulo,
       sortable: true,
     },
     {
+      id: 'duracao',
       name: 'duracao',
       selector: (row: VideoProps) => row.duracao,
       sortable: true,
     },
     {
+      id: 'data_de_criacao',
       name: 'data_de_criacao',
       selector: (row: VideoProps) => row.data_de_criacao,
       sortable: true,
     },
     {
+      id: 'likes',
       name: 'likes',
       selector: (row: VideoProps) => row.likes,
       sortable: true,
+      sortFunction: (a, b) => a.likes - b.likes,
     },
     {
+      id: 'comentarios',
+      name: 'comentarios',
+      selector: (row: VideoProps) => row.comentarios,
+      sortable: true,
+      sortFunction: (a, b) => a.comentarios - b.comentarios,
+    },
+    {
+      id: 'Ações',
       name: 'Ações',
       cell: row => (
         <>

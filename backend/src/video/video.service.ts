@@ -24,11 +24,12 @@ export class VideoService {
     return this.CRUD.create('video', createVideoDto);
   }
 
-  findAll() {
-    return this.CRUD.read(
-      'videos_com_likes',
-      ' order by data_de_criacao DESC limit 50',
+  async findAll() {
+    const videos = await this.CRUD.read(
+      'videos_com_likes_e_comms',
+      ' order by data_de_criacao DESC limit 100',
     );
+    return videos;
   }
 
   async findOne(id: number) {
