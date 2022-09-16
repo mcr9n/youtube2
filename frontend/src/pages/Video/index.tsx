@@ -4,6 +4,7 @@ import axios from 'axios'
 import DataTable, { TableColumn } from 'react-data-table-component'
 import { Button, LinearProgress } from '@mui/material'
 import Link from '../../components/Link'
+import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ type VideoProps = {
 }
 
 function Video() {
+  let navigate = useNavigate();
   const [videos, setVideos] = useState<VideoProps[]>([])
 
   const columns: TableColumn<VideoProps>[] = [
@@ -91,7 +93,7 @@ function Video() {
     setVideos(videos.filter(video => video.id !== id))
   }
 
-  const handleEdit = async (id: number) => {}
+  const handleEdit = async (id: number) => {return navigate(`/video/editar/${id}`)}
 
   useEffect(() => {
     axios.get('http://localhost:3333/video').then(response => {

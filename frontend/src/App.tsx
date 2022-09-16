@@ -9,6 +9,7 @@ import NovoPost from './pages/NovoPost'
 import NovoVideo from './pages/NovoVideo'
 import EditarPost from './pages/EditarPost'
 import EditarUsuario from './pages/EditarUsuario'
+import EditarVideo from './pages/EditarVideo'
 
 const darkTheme = createTheme({
   palette: { mode: 'dark', background: { default: '#121212' } },
@@ -30,6 +31,7 @@ function App() {
           <Route path="/video/novo" element={<NovoVideo />} />
           <Route path="/post/editar/:id" element={<EditarPost />} />
           <Route path="/usuario/editar/:id" element={<EditarUsuario />} />
+          <Route path="/video/editar/:id" element={<EditarVideo />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
