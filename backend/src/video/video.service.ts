@@ -1,10 +1,4 @@
-import {
-  Body,
-  Injectable,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { Injectable } from '@nestjs/common';
 import { InjectKnex, Knex } from 'nestjs-knex';
 import { CRUD } from '../utils/crud';
 
@@ -21,7 +15,10 @@ export class VideoService {
   }
 
   create(createVideoDto: CreateVideoDto) {
-    return this.CRUD.create('video', createVideoDto);
+    return this.CRUD.create('video', {
+      ...createVideoDto,
+      thumbnail: createVideoDto.thumbnail.buffer.toString('base64'),
+    });
   }
 
   async findAll() {

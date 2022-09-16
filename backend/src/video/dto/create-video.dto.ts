@@ -4,7 +4,7 @@ export class CreateVideoDto {
   @Transform(({ value }) => parseInt(value))
   titulo: number;
 
-  duracao: string;
+  duracao: number;
 
   @Transform(({ value }) => parseInt(value))
   qualidade: number;

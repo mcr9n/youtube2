@@ -1,16 +1,6 @@
 import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
-  // CREATE VIEW videos_com_likes AS
-  // select video.*, count(likes.video_id) as likes
-  // from video
-  // left outer join likes on video.id = likes.video_id
-  // group by video.id;
-
-  // select video.id, count(comentario.video_id) as comentario
-  // from video
-  // left outer join comentario on video.id = comentario.video_id
-  // group by video.id;
   return knex.raw(`
     CREATE VIEW videos_com_likes_e_comms AS
       select video_l.*, count(comentario.video_id) as comentarios
@@ -36,6 +26,5 @@ export async function up(knex: Knex): Promise<void> {
 export async function down(knex: Knex): Promise<void> {
   return knex.raw(`
     drop view if exists videos_com_likes_e_comms;
-
   `);
 }
